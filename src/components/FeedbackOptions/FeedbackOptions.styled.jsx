@@ -1,4 +1,5 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
+
 export const Button = styled.button`
   min-width: 100px;
   font-family: inherit;
@@ -8,8 +9,9 @@ export const Button = styled.button`
   background: #4676d7;
   color: #fff;
   padding: 8px 16px;
+  margin-right: 15px;
   font-size: 1rem;
-  cursor: pointer;`
+  cursor: pointer;`;
 
 // .c-button:hover {
 //   background: #1d49aa;
