@@ -11,13 +11,10 @@ export const Button = styled.button`
   padding: 8px 16px;
   margin-right: 15px;
   font-size: 1rem;
-  cursor: pointer;`;
-
-// .c-button:hover {
-//   background: #1d49aa;
-// }
-//
-// .c-button:focus {
-//   outline: none;
-//   box-shadow: 0 0 0 4px #cbd6ee;
-// }
+  cursor: pointer;
+  &:active {
+    box-shadow: 0 0 0 4px #cbd6ee;
+    background-color: aliceblue;
+    color: #4676d7;
+  }
+`;
