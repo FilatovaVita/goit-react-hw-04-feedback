@@ -6,9 +6,6 @@ import { Statistic } from '../Statistic/Statistic';
 import { Notification } from '../Notification/Notification';
 
 export class App extends Component {
-  static defaultProps = {
-    feedbackTypes: ['good', 'neutral', 'bad'],
-  };
   state = {
     good: 0,
     neutral: 0,
@@ -29,19 +26,17 @@ export class App extends Component {
 
   render() {
     const { good, neutral, bad } = this.state;
-    const { feedbackTypes } = this.props;
+
     return (
       <Container>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={feedbackTypes}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.addFeedback}
           ></FeedbackOptions>
         </Section>
         <Section title="Statistic">
-          {this.countTotalFeedback() === 0 ? (
-            <Notification message="There is no feedback" />
-          ) : (
+          {this.countTotalFeedback() ? (
             <Statistic
               good={good}
               neutral={neutral}
@@ -49,6 +44,8 @@ export class App extends Component {
               total={this.countTotalFeedback()}
               positivePercentage={this.countPositiveFeedbackPercentage()}
             ></Statistic>
+          ) : (
+            <Notification message="There is no feedback" />
           )}
         </Section>
       </Container>

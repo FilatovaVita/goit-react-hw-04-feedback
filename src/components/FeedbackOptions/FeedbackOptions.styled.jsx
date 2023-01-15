@@ -11,6 +11,7 @@ export const Button = styled.button`
   padding: 8px 16px;
   margin-right: 15px;
   font-size: 1rem;
+  text-transform: capitalize;
   cursor: pointer;
   &:active {
     box-shadow: 0 0 0 4px #cbd6ee;
