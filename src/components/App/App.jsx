@@ -1,48 +1,57 @@
-import React, { Component } from 'react';
+import  { useState } from 'react';
 import { Container } from './App.styled';
 import { FeedbackOptions } from '../FeedbackOptions/FeedbackOptions';
 import { Section } from '../Section/Section';
 import { Statistic } from '../Statistic/Statistic';
 import { Notification } from '../Notification/Notification';
 
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
-  addFeedback = feedback => {
-    this.setState(prevState => ({ [feedback]: prevState[feedback] + 1 }));
-  };
+export const App =()=> {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  const options = ['good', 'neutral', 'bad'];
 
-  countTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
-    return good + neutral + bad;
-  };
-  countPositiveFeedbackPercentage = () => {
-    const { good } = this.state;
-    return Math.round((good * 100) / this.countTotalFeedback()) || 0;
-  };
+ const addFeedback = event => {
+   switch (event) {
+    case 'good':
+      setGood(prevState => prevState + 1);
+      break;
+    case 'neutral':
+      setNeutral(prevState => prevState + 1);
+      break;
+    case 'bad':
+      setBad(prevState => prevState + 1);
+      break;
+    default:
+      return;
+  }
+};
 
-  render() {
-    const { good, neutral, bad } = this.state;
+ const countFeedback = () => {
+    const total  = good + neutral + bad;
+    return total;
+ };
+    const countPositiveFeedbackPercentage = () => {
+      const positiveFeedbackPercentage = Math.round((good * 100) / countFeedback()) || 0;
+      return positiveFeedbackPercentage;
+  };
 
     return (
       <Container>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={Object.keys(this.state)}
-            onLeaveFeedback={this.addFeedback}
+            options={options}
+            onLeaveFeedback={addFeedback}
           ></FeedbackOptions>
         </Section>
         <Section title="Statistic">
-          {this.countTotalFeedback() ? (
+          {countFeedback() ? (
             <Statistic
               good={good}
               neutral={neutral}
               bad={bad}
-              total={this.countTotalFeedback()}
-              positivePercentage={this.countPositiveFeedbackPercentage()}
+              total={countFeedback()}
+              positivePercentage={countPositiveFeedbackPercentage()}
             ></Statistic>
           ) : (
             <Notification message="There is no feedback" />
@@ -51,4 +60,51 @@ export class App extends Component {
       </Container>
     );
   }
-}
+
+// export class App extends Component {
+//   state = {
+//     good: 0,
+//     neutral: 0,
+//     bad: 0,
+//   };
+//   addFeedback = feedback => {
+//     this.setState(prevState => ({ [feedback]: prevState[feedback] + 1 }));
+//   };
+//
+//   countTotalFeedback = () => {
+//     const { good, neutral, bad } = this.state;
+//     return good + neutral + bad;
+//   };
+//   countPositiveFeedbackPercentage = () => {
+//     const { good } = this.state;
+//     return Math.round((good * 100) / this.countTotalFeedback()) || 0;
+//   };
+//
+//   render() {
+//     const { good, neutral, bad } = this.state;
+//
+//     return (
+//       <Container>
+//         <Section title="Please leave feedback">
+//           <FeedbackOptions
+//             options={Object.keys(this.state)}
+//             onLeaveFeedback={this.addFeedback}
+//           ></FeedbackOptions>
+//         </Section>
+//         <Section title="Statistic">
+//           {this.countTotalFeedback() ? (
+//             <Statistic
+//               good={good}
+//               neutral={neutral}
+//               bad={bad}
+//               total={this.countTotalFeedback()}
+//               positivePercentage={this.countPositiveFeedbackPercentage()}
+//             ></Statistic>
+//           ) : (
+//             <Notification message="There is no feedback" />
+//           )}
+//         </Section>
+//       </Container>
+//     );
+//   }
+// }
